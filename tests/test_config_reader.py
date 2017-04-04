@@ -38,10 +38,10 @@ def sample_lambda_with_setting_folder():
     os.chdir(cwd)  # cd back to original folder
 
 
-def test_read_config(sample_lambda_with_setting_folder, caplog):
+def test_read_config(sample_lambda_with_setting_folder):
     expected = read(here('./resources/sample_lambda_with_setting/expected_gcdt_dev.json'))
     config = {}
-    actual = read_config(({'env': 'dev'}, config))
+    read_config(({'env': 'dev'}, config))
 
     assert config == expected
 
