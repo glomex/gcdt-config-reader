@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 """A gcdt-plugin which demonstrates how to implement hello world as plugin."""
 from __future__ import unicode_literals, print_function
-import logging
 import os
 import imp
 import json
 
 from gcdt import gcdt_signals
 from gcdt.utils import dict_merge
+from gcdt.gcdt_logging import getLogger
 from gcdt.gcdt_signals import check_hook_mechanism_is_intact, \
     check_register_present
 
 from gcdt.gcdt_defaults import CONFIG_READER_CONFIG
 
 
-log = logging.getLogger(__name__)
+log = getLogger(__name__)
 CONFIG_BASE_NAME = 'gcdt'
 
 
