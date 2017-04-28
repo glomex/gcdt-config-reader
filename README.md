@@ -9,7 +9,7 @@ gcdt: https://github.com/glomex/gcdt
 
 Features include:
 
-* read gcdt_<env>.json and gcdt_<env>.py config files 
+* read gcdt_<env>.json and gcdt_<env>.py config files
 
 
 ## Running tests
