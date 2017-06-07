@@ -73,7 +73,8 @@ def read_config_if_exists(config_base_name, env):
     if len(cfg_files) == 0:
         return {}
     elif len(cfg_files) > 1:
-        log.warning('found multiple types of config files: %s' % cfg_files)
+        log.warning('found multiple types of config files: %s' %
+                    [str(cf) for cf in cfg_files])
     # take the first one
     filename = cfg_files[0]
     if filename.endswith('.py'):
@@ -83,6 +84,16 @@ def read_config_if_exists(config_base_name, env):
     elif filename.endswith('.yaml'):
         # TODO check for PyYaml module and read the yaml cfg file!
         pass
+
+
+def read_ignore_files(ignorefiles):
+    gcdtignore = []
+    for p in ignorefiles:
+        if os.path.exists(p):
+            with open(p, 'r') as ifile:
+                gcdtignore.extend(ifile.read().splitlines())
+    print(gcdtignore)
+    return gcdtignore
 
 
 def read_config(params):
@@ -97,6 +108,12 @@ def read_config(params):
             # apply the gcdt_plugins_commons DEFAULT_CONFIG
             dict_merge(config, CONFIG_READER_CONFIG)
             dict_merge(config, cfg)
+            gcdtignore = read_ignore_files(
+                # TODO: make it configurable in DEFAULT_CONFIG
+                ['~/.ramudaignore', '.gcdtignore', '.npmignore']
+            )
+            if gcdtignore:
+                dict_merge(config, {'gcdtignore': gcdtignore})
     except Exception as e:
         config['error'] = e.message
 

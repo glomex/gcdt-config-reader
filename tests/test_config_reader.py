@@ -53,7 +53,7 @@ def test_conflicting_configs(sample_python_cfg_folder, caplog):
     assert actual == expected
     assert caplog.record_tuples == [
         (config_reader.__name__, logging.WARNING,
-         'found multiple types of config files: [u\'gcdt_dev.py\', u\'gcdt_dev.json\']'),
+         'found multiple types of config files: [\'gcdt_dev.py\', \'gcdt_dev.json\']'),
     ]
 
 
