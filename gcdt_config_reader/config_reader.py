@@ -92,7 +92,6 @@ def read_ignore_files(ignorefiles):
         if os.path.exists(p):
             with open(p, 'r') as ifile:
                 gcdtignore.extend(ifile.read().splitlines())
-    print(gcdtignore)
     return gcdtignore
 
 
