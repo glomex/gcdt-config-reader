@@ -10,8 +10,8 @@ from gcdt.utils import dict_merge
 from gcdt.gcdt_logging import getLogger
 from gcdt.gcdt_signals import check_hook_mechanism_is_intact, \
     check_register_present
-
 from gcdt.gcdt_defaults import CONFIG_READER_CONFIG
+from gcdt.utils import GracefulExit
 
 
 log = getLogger(__name__)
@@ -113,6 +113,8 @@ def read_config(params):
             )
             if gcdtignore:
                 dict_merge(config, {'gcdtignore': gcdtignore})
+    except GracefulExit:
+        raise
     except Exception as e:
         config['error'] = e.message
 

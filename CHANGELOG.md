@@ -1,11 +1,17 @@
-## Change Log
+# Changelog
 All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
 
-### [0.0.12] - 2017-06-07
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+### [0.0.12] - 2017-06-29
 #### Added
-- FEATURE moved reading of ignore patterns to config-readers 
+- prepare to handle signals in gcdt (#40)
+
+### [0.0.11] - 2017-06-07
+#### Added
+- moved reading of ignore patterns to config-readers 
 
 ### [0.0.10] - 2017-03-27
-#### Added
-- FEATURE moved plugins to separate repos and packages
+#### Changed
+- moved plugins to separate repos and packages
