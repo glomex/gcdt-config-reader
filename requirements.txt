@@ -2,3 +2,4 @@
 # gcdt dependency is from gcdt => gcdt-plugins
 
 # Other dependencies
+ruamel.yaml>=0.15.9  # used in gcdt-gen-serverless, gcdt-bundler, too

@@ -5,6 +5,7 @@ import os
 import imp
 import json
 
+import ruamel.yaml as yaml
 from gcdt import gcdt_signals
 from gcdt.utils import dict_merge
 from gcdt.gcdt_logging import getLogger
@@ -40,6 +41,12 @@ def _read_json_cfg(filename):
         return json.load(jfile)
 
 
+def _read_yaml_cfg(filename):
+    # helper
+    with open(filename, 'r') as jfile:
+        return yaml.load(jfile, Loader=yaml.Loader)
+
+
 def _read_python_cfg(filename):
     # helper
     # TODO docu!
@@ -58,14 +65,14 @@ def _read_python_cfg(filename):
     return cfg.generate_config()
 
 
-def read_config_if_exists(config_base_name, env):
+def read_config_from_file(config_base_name):
     """If config file exists, read it and return the config.
     :param config_base_name:
     :param env:
     :return:
     """
     cfg_files = []
-    for f in ['%s_%s.%s' % (config_base_name, env, ext) for ext in
+    for f in ['%s.%s' % (config_base_name, ext) for ext in
               ['py', 'json', 'yaml']]:
         if os.path.exists(f):
             cfg_files.append(f)
@@ -77,13 +84,31 @@ def read_config_if_exists(config_base_name, env):
                     [str(cf) for cf in cfg_files])
     # take the first one
     filename = cfg_files[0]
+    cfg = {}
     if filename.endswith('.py'):
-        return _read_python_cfg(filename)
+        cfg = _read_python_cfg(filename)
     elif filename.endswith('.json'):
-        return _read_json_cfg(filename)
+        cfg = _read_json_cfg(filename)
     elif filename.endswith('.yaml'):
-        # TODO check for PyYaml module and read the yaml cfg file!
-        pass
+        cfg = _read_yaml_cfg(filename)
+    # exhaust config file references
+    while 'baseconfig' in cfg:
+        baseconfig = cfg.pop('baseconfig')
+        if baseconfig == config_base_name:
+            log.warn('You configured a recursive `baseconfig` reference in \'%s\'.', filename)
+            break
+        # TODO fence against recursive file references with n>2
+        dict_merge(cfg, read_config_from_file(baseconfig))
+    return cfg
+
+
+def read_config_if_exists(config_base_name, env):
+    """If config file exists, read it and return the config.
+    :param config_base_name: gcdt
+    :param env: dev | qa | prod
+    :return:
+    """
+    return read_config_from_file('%s_%s' % (config_base_name, env))
 
 
 def read_ignore_files(ignorefiles):
