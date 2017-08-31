@@ -11,7 +11,7 @@ from gcdt.utils import dict_merge
 from gcdt.gcdt_logging import getLogger
 from gcdt.gcdt_signals import check_hook_mechanism_is_intact, \
     check_register_present
-from gcdt.gcdt_defaults import CONFIG_READER_CONFIG
+#from gcdt.gcdt_defaults import CONFIG_READER_CONFIG
 from gcdt.utils import GracefulExit
 
 
@@ -129,8 +129,9 @@ def read_config(params):
     try:
         cfg = read_config_if_exists(CONFIG_BASE_NAME, context['env'])
         if cfg:
+            # defaults are now provided via openapi spec
             # apply the gcdt_plugins_commons DEFAULT_CONFIG
-            dict_merge(config, CONFIG_READER_CONFIG)
+            #dict_merge(config, CONFIG_READER_CONFIG)
             dict_merge(config, cfg)
             gcdtignore = read_ignore_files(
                 # TODO: make it configurable in DEFAULT_CONFIG

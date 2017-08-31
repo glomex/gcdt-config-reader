@@ -1,5 +1,5 @@
 # Dependencies have to be in sync with other packages (gcdt, glomex-credstash)
-# gcdt dependency is from gcdt => gcdt-plugins
+gcdt>=0.2.0
 
 # Other dependencies
 ruamel.yaml>=0.15.9  # used in gcdt-gen-serverless, gcdt-bundler, too
