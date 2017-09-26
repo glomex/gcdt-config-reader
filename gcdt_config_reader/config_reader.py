@@ -125,23 +125,23 @@ def read_config(params):
                    config - The stack details, etc..)
     """
     context, config = params
-    try:
-        cfg = read_config_if_exists(CONFIG_BASE_NAME, context['env'])
-        if cfg:
-            # defaults are now provided via openapi spec
-            # apply the gcdt_plugins_commons DEFAULT_CONFIG
-            #dict_merge(config, CONFIG_READER_CONFIG)
-            dict_merge(config, cfg)
-            gcdtignore = read_ignore_files(
-                # TODO: make it configurable in DEFAULT_CONFIG
-                ['~/.ramudaignore', '.gcdtignore', '.npmignore']
-            )
-            if gcdtignore:
-                dict_merge(config, {'gcdtignore': gcdtignore})
-    except GracefulExit:
-        raise
-    except Exception as e:
-        context['error'] = e.message
+    #try:
+    cfg = read_config_if_exists(CONFIG_BASE_NAME, context['env'])
+    if cfg:
+        # defaults are now provided via openapi spec
+        # apply the gcdt_plugins_commons DEFAULT_CONFIG
+        #dict_merge(config, CONFIG_READER_CONFIG)
+        dict_merge(config, cfg)
+        gcdtignore = read_ignore_files(
+            # TODO: make it configurable in DEFAULT_CONFIG
+            ['~/.ramudaignore', '.gcdtignore', '.npmignore']
+        )
+        if gcdtignore:
+            dict_merge(config, {'gcdtignore': gcdtignore})
+    #except GracefulExit:
+    #    raise
+    #except Exception as e:
+    #    context['error'] = e.message
 
 
 def register():
