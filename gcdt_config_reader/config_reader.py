@@ -141,7 +141,7 @@ def read_config(params):
     except GracefulExit:
         raise
     except Exception as e:
-        config['error'] = e.message
+        context['error'] = e.message
 
 
 def register():
